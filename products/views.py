@@ -1,8 +1,8 @@
-rom django.shortcuts import render
+from django.shortcuts import render
 from .models import Product
 
 # Views
-def index(request):
+def all_products(request):
     """" A view to return the index page of products, 
     including sorting and search queries"""
     products = Product.objects.all()
