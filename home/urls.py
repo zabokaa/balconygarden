@@ -1,4 +1,4 @@
-from django.contrib import admin
+# Description: URL patterns for the home app
 from django.urls import path
 from . import views
 
