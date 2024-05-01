@@ -4,6 +4,9 @@ from django.db import models
 
 class Category(models.Model):
     """A category model that includes a name and a friendly name."""
+    # fix spelling error in admin panel
+    class Meta:
+        verbose_name_plural = 'Categories'
     name = models.CharField(max_length=254)
     # add a friendly name field to the category model, that is optional
     friendly_name = models.CharField(max_length=254, null=True, blank=True)
