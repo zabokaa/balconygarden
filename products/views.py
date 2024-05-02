@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
-from .models import Product
+from .models import Product, Category
 from django.db.models import Q
 from django.contrib import messages
 
@@ -17,7 +17,9 @@ def all_products(request):
             # If the key does not exist, None is returned
             categories = request.GET['category'].split(',')
             products = products.filter(category__name__in=categories)
-            
+            # converting list of strings in an acutal list of objects, so we can enter them in the filter
+            categories = Category.objects.filter(name__in=categories)
+
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
@@ -32,6 +34,7 @@ def all_products(request):
     context = {
         'products': products,
         'search_term': query,
+        'current_categories': category,
     }
     return render(request, 'products/products.html', context)
 
