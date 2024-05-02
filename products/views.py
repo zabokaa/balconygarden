@@ -9,7 +9,15 @@ def all_products(request):
     including sorting and search queries"""
     products = Product.objects.all()
     query = None
+    category = None
     if request.GET:
+        if 'category' in request.GET:
+            # request.GET is a dictionary-like object that allows you to access the data sent in the HTTP request by key name
+            # get() is a method that returns the value of the specified key
+            # If the key does not exist, None is returned
+            categories = request.GET['category'].split(',')
+            products = products.filter(category__name__in=categories)
+            
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
