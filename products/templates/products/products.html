@@ -11,7 +11,7 @@
 
 {% block content %}
 <!-- white BG color -->
-    <div class="overlay"></div>
+    <div class="overlay">
     <div class="container-fluid">
         <div class="row">
             <div class="col text-center mt-3">
@@ -21,7 +21,7 @@
         </div>
         <div class="row">
             <div class="product-container col-10 offset-1">
-                <div class="row mt-1 mb-2"></div>
+                <div class="row mt-1 mb-2">
                 <!-- card displayed for each element -->
                     {% for product in products %}
                         <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
@@ -66,11 +66,13 @@
                             </div>
                         {% endif %}
                         {% if forloop.counter|divisibleby:3 %}
+                        <!-- hiding on everyone except large screens -->
                             <div class="col-12 d-none d-lg-block d-xl-none mb-5">
                                 <hr>
                             </div>
                         {% endif %}
                         {% if forloop.counter|divisibleby:4 %}
+                         <!-- hiding on every device except x-large screens -->
                             <div class="col-12 d-none d-xl-block mb-5">
                                 <hr>
                             </div>
@@ -79,5 +81,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}
