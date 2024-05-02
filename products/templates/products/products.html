@@ -10,8 +10,7 @@
 {% endblock %}
 
 {% block content %}
-<!-- white BG color -->
-    <div class="overlay">
+    <div class="overlay"></div>
     <div class="container-fluid">
         <div class="row">
             <div class="col text-center mt-3">
@@ -21,26 +20,23 @@
         </div>
         <div class="row">
             <div class="product-container col-10 offset-1">
-                <div class="row mt-1 mb-2">
-                <!-- card displayed for each element -->
+                <div class="row mt-1 mb-2"></div>
+                <div class="row">
                     {% for product in products %}
                         <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                             <div class="card h-100 border-0">
-
                                 {% if product.image %}
-                                <a href="">
+                                <a href="{% url 'product_detail' product.id %}">
                                     <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
                                 </a>
                                 {% else %}
-                                <a href="">
+                                <a href="{% url 'product_detail' product.id %}">
                                     <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
                                 </a>
                                 {% endif %}
-
                                 <div class="card-body pb-0">
                                     <p class="mb-0">{{ product.name }}</p>
                                 </div>
-                                <!-- card footer -->
                                 <div class="card-footer bg-white pt-0 border-0 text-left">
                                     <div class="row">
                                         <div class="col">
@@ -66,13 +62,11 @@
                             </div>
                         {% endif %}
                         {% if forloop.counter|divisibleby:3 %}
-                        <!-- hiding on everyone except large screens -->
                             <div class="col-12 d-none d-lg-block d-xl-none mb-5">
                                 <hr>
                             </div>
                         {% endif %}
                         {% if forloop.counter|divisibleby:4 %}
-                         <!-- hiding on every device except x-large screens -->
                             <div class="col-12 d-none d-xl-block mb-5">
                                 <hr>
                             </div>
@@ -81,6 +75,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}
