@@ -9,7 +9,7 @@ def all_products(request):
     including sorting and search queries"""
     products = Product.objects.all()
     query = None
-    category = None
+    categories = None
     if request.GET:
         if 'category' in request.GET:
             # request.GET is a dictionary-like object that allows you to access the data sent in the HTTP request by key name
@@ -34,7 +34,7 @@ def all_products(request):
     context = {
         'products': products,
         'search_term': query,
-        'current_categories': category,
+        'current_categories': categories,
     }
     return render(request, 'products/products.html', context)
 
