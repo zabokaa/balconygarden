@@ -15,6 +15,7 @@ def all_products(request):
     direction = None
 
     if request.GET:
+        # print(request.GET) #debugging
         if 'sort' in request.GET:
             # sortkey is the key that we are sorting by
             sortkey = request.GET['sort']
@@ -25,6 +26,9 @@ def all_products(request):
                 sortkey = 'lower_name'
                 # using lower built-in fct to make the sorting case-insensitive
                 products = products.annotate(lower_name=Lower('name'))
+            # if the key is category, we are sorting by category
+            if sortkey == 'category':
+                sortkey = 'category__name' #double underscore syntax allows us to drill into a related model
             # if the key is direction, we are sorting by direction
             if 'direction' in request.GET:
                 direction = request.GET['direction']
@@ -35,9 +39,11 @@ def all_products(request):
             products = products.order_by(sortkey)
         if 'category' in request.GET:    
             categories = request.GET['category'].split(',')
+            # print('categories:', categories) #debugging
             products = products.filter(category__name__in=categories)
             # converting list of strings in an acutal list of objects, so we can enter them in the filter
             categories = Category.objects.filter(name__in=categories)
+            print('categories:', categories) #debugging
 
         if 'q' in request.GET:
             query = request.GET['q']
