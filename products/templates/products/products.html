@@ -31,6 +31,7 @@
                 <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
                     <div class="sort-select-wrapper w-50">
                         <!-- django template select box -->
+                        <!-- giving a convinient way to split by underscore by sort and direction parameters-->
                         <select id="sort-selector"
                             class="custom-select custom-select-sm rounded-0 border border-{% if current_sorting != 'None_None' %}info{% else %}black{% endif %}">
                             <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
@@ -123,4 +124,42 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block postloadjs %}
+<!-- super bc we want to append and not replace !! -->
+    {{ block.super }}
+    <script type="text/javascript">
+		$('.btt-link').click(function(e) {
+			window.scrollTo(0,0)
+		})
+	</script>
+    
+    <script type="text/javascript">
+        // capture the change event from the source selector itself
+        $('#sort-selector').change(function() {
+            var selector = $(this);
+            // Using the url object will give us some nice functionality in particular
+            // the ability to replace the current get parameters which is required in order to
+            // update the sorting methodology.
+            var currentUrl = new URL(window.location);
+
+            var selectedVal = selector.val();
+            if(selectedVal != "reset"){
+                var sort = selectedVal.split("_")[0];
+                var direction = selectedVal.split("_")[1];
+                // Now that I've got the current sort and direction.
+                // All I need to do is replace those get parameters in the URL.
+                currentUrl.searchParams.set("sort", sort);
+                currentUrl.searchParams.set("direction", direction);
+                // replacing url with new url
+                window.location.replace(currentUrl);
+            } else {
+                currentUrl.searchParams.delete("sort");
+                currentUrl.searchParams.delete("direction");
+
+                window.location.replace(currentUrl);
+            }
+        })
+    </script>
 {% endblock %}
