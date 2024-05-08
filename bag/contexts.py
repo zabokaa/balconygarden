@@ -4,7 +4,7 @@ from django.conf import settings
 # CONTEXT PROCESSOR, creating a dictionary that will be available to all templates
 # need to add it to settings: TEMPLATES > OPTIONS > context_processors !
 def bag_contents(request):
-
+    # initializing variables
     bag_items = []
     total = 0
     product_count = 0
