@@ -54,7 +54,7 @@
                                             <form 
                                                 class="form update-form"
                                                 method="POST" 
-                                                action="">
+                                                action="{% url 'adjust_bag' item.item_id %}">  #this is the form that will be submitted when the update link is clicked
                                                 {% csrf_token %}
                                                 <div class="form-group">
                                                     <div class="input-group">
