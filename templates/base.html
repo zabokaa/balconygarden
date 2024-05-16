@@ -129,6 +129,7 @@
   {% if messages %}
   <div class="message-container">
     {% for message in messages %}
+    <!-- for levels look bootstrap docu -->
       {% with message.level as level %}
         {% if level == 40 %}
           {% include 'includes/toasts/toast_error.html' %}
@@ -151,7 +152,7 @@
   {% endblock %}
 
   {% block postloadjs %}
-  
+
   <script type="text/javascript">
     $('.toast').toast('show');
   </script>
