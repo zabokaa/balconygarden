@@ -23,6 +23,7 @@ class Order(models.Model):
     order_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
     grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
 
+# order methods
     def _generate_order_number(self):
         """
         Generate a random, unique order number using UUID
@@ -34,12 +35,14 @@ class Order(models.Model):
         Update grand total each time a line item is added,
         accounting for delivery costs.
         """
+        # using aggregate function to sum the lineitem total
         self.order_total = self.lineitems.aggregate(Sum('lineitem_total'))['lineitem_total__sum']
         if self.order_total < settings.FREE_DELIVERY_THRESHOLD:
             self.delivery_cost = self.order_total * settings.STANDARD_DELIVERY_PERCENTAGE / 100
         else:
             self.delivery_cost = 0
         self.grand_total = self.order_total + self.delivery_cost
+        # safe the instance
         self.save()
 
     def save(self, *args, **kwargs):
@@ -51,9 +54,9 @@ class Order(models.Model):
             self.order_number = self._generate_order_number()
         super().save(*args, **kwargs)
 
+# standard string method:
     def __str__(self):
         return self.order_number
-    
 
 class OrderLineItem(models.Model):
     order = models.ForeignKey(
