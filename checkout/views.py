@@ -23,11 +23,19 @@ def checkout(request):
     total = current_bag['grand_total']
     stripe_total = round(total * 100)
 
-    # Create a PaymentIntent
-    intent = stripe.PaymentIntent.create(
-        amount=stripe_total,
-        currency=settings.STRIPE_CURRENCY,
-    )
+     # Check if a PaymentIntent already exists in the session
+    if 'payment_intent_id' in request.session:
+        # Retrieve the existing PaymentIntent
+        intent = stripe.PaymentIntent.retrieve(request.session['payment_intent_id'])
+    else:
+        # Create a new PaymentIntent
+        intent = stripe.PaymentIntent.create(
+            amount=stripe_total,
+            currency=settings.STRIPE_CURRENCY,
+        )
+        # Store the ID of the PaymentIntent in the session
+        request.session['payment_intent_id'] = intent.id
+
 
 # create instance for order form
     order_form = OrderForm()
