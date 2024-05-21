@@ -48,12 +48,16 @@ var form = document.getElementById('payment-form');
 
 form.addEventListener('submit', function(ev) {
     ev.preventDefault();
+// Re-enable card and submit button to prevent multiple submissions
     card.update({ 'disabled': true});
     $('#submit-button').attr('disabled', true);
+    // calling confirmCardPayment to confirm the payment
     stripe.confirmCardPayment(clientSecret, {
         payment_method: {
+            // passing the card element to confirmCardPayment
             card: card,
         }
+        // if the payment is successful, the paymentIntent will have a status of succeeded
     }).then(function(result) {
         if (result.error) {
             var errorDiv = document.getElementById('card-errors');
@@ -63,7 +67,7 @@ form.addEventListener('submit', function(ev) {
                 </span>
                 <span>${result.error.message}</span>`;
             $(errorDiv).html(html);
-// Re-enable card and submit button to prevent multiple submissions
+        // if it went wrong: allowing the user to try again
             card.update({ 'disabled': false});
             $('#submit-button').attr('disabled', false);
         } else {
