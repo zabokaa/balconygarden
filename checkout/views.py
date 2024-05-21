@@ -7,11 +7,13 @@ from bag.contexts import bag_contents
 import stripe
 
 def checkout(request):
-    stripe_public_key = settings.STRIPE_PUBLIC_KEY
-    stripe_secret_key = settings.STRIPE_SECRET_KEY
     """
     A view to return the checkout page
     """
+    stripe_public_key = settings.STRIPE_PUBLIC_KEY
+    stripe_secret_key = settings.STRIPE_SECRET_KEY
+    stripe.api_key = stripe_secret_key
+
     # get bag from session + check if it's empty
     bag = request.session.get('bag', {})
     if not bag:
