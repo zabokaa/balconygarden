@@ -48,6 +48,7 @@ class StripeWH_Handler:
                 shipping_details.address[field] = None
 
         order_exists = False
+        # Attempt to find the order by the pid in the metadata five times
         attempt = 1
         while attempt <= 5:
             try:
