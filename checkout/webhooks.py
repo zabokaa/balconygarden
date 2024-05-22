@@ -43,6 +43,7 @@ def webhook(request):
     }
 
     # Get the webhook type from Stripe
+    # getting something ;ike payemnt succeed etc 
     event_type = event['type']
 
     # If there's a handler for it, get it from the event map
