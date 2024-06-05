@@ -1,6 +1,8 @@
 import time
 import json
 from django.http import HttpResponse
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 # import logging
 import stripe
 from products.models import Product
@@ -14,6 +16,10 @@ class StripeWH_Handler:
 
     def __init__(self, request):
         self.request = request
+
+    def _send_confirmation_email(self, order):
+        """Send the user a confirmation email"""
+        
 
     def handle_event(self, event):
         """
