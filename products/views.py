@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
-from .models import Product, Category
 from django.db.models import Q
 from django.contrib import messages
 from django.db.models.functions import Lower
+
+from .models import Product, Category
+from .forms import ProductForm
 
 # Views
 def all_products(request):
