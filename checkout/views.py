@@ -10,6 +10,8 @@ from products.models import Product
 from bag.contexts import bag_contents
 from .forms import OrderForm
 from .models import Order, OrderLineItem
+from profiles.forms import UserProfileForm
+from profiles.models import UserProfile
 
 @require_POST
 def cache_checkout_data(request):
