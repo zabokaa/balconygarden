@@ -254,6 +254,7 @@ input[name='q']::placeholder {
     cursor: pointer;
 }
 
+/* for editing etc of product for super user  */
 .custom-checkbox .custom-control-label::before {
     border-radius: 0;
     border-color: #dc3545;
