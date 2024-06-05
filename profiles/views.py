@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from .models import UserProfile
 from .forms import UserProfileForm
+from checkout.models import Order
 from django.contrib import messages
+
 
 def profile(request):
     """ Display the user's profile. """
@@ -34,7 +36,7 @@ def order_history(request, order_number):
         f'This is a past confirmation for order number {order_number}. '
         'A confirmation email was sent on the order date.'
     ))
-
+# we use the template bc it already has the order details and nice styling
     template = 'checkout/checkout_success.html'
     context = {
         'order': order,
