@@ -1,1 +1,1 @@
-web: gunicorn boutique.wsgi: application
+web: gunicorn boutique.wsgi
