@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product
+from .models import Category, Product, Inventory
 
 # Register your models here.
 class ProductAdmin(admin.ModelAdmin):
@@ -21,5 +21,15 @@ class CategoryAdmin(admin.ModelAdmin):
         'name',
     )
 
+class InventoryAdmin(admin.ModelAdmin):  # Create an admin class for Inventory
+    list_display = (
+        'product',
+        'in_stock',
+        'last_updated',
+    )
+
+    ordering = ('product',)
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Inventory, InventoryAdmin) 
