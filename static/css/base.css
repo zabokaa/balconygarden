@@ -1,9 +1,13 @@
+:root {
+    --primary-color: #274432;
+    --secondary-color: #E8A027;
+}
 html {
     height: 100%;
 }
 
 body {
-    background: url('/media/homepage_background_cropped.jpg') no-repeat center center fixed;
+    background: url('/media/ernte.jpg') no-repeat center center fixed;
     background-size: cover;
     height: calc(100vh - 164px);
     color: #555;
@@ -23,25 +27,30 @@ body {
     text-transform: uppercase;
 }
 
+.home-txt {
+    color: var(--secondary-color);
+    text-shadow: 2px 2px 4px #000;
+}
+
 .main-logo-link {
     width: fit-content;
 }
 
 .shop-now-button {
-    background: black;
+    background: var(--primary-color);
     color: white;
     min-width: 260px;
 }
 
 .btn-black {
-    background: black;
+    background: var(--primary-color);
     color: white;
 }
 
 .btn-outline-black {
     background: white;
-    color: black !important; /* use important to override link colors for <a> elements */
-    border: 1px solid black;
+    color: var(--primary-color) !important; 
+    border: 1px solid var(--primary-color);
 }
 
 .btn-outline-black:hover,

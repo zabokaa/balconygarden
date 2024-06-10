@@ -72,7 +72,7 @@ The Viña project has 5 models:
 
 Entity Relationship Diagram:
 
-  ![ERD](./assets/ERD_balconyGrown.pdf)
+  ![ERD](./MEDIA/readme/ERD_balconyGrown.pdf)
 
 ## Design
 
@@ -166,5 +166,5 @@ Project is: in process
 
 ## Acknowledgements
 
-- This project is based on full-stack course @ Code Institute, especially the Walk-through-project "I Think Therefore I Blog"
+- This project is based on full-stack course @ Code Institute, especially the Walk-through-project Boutique-Ado
 - Images from Pexels or mine
