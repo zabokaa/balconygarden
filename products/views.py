@@ -4,8 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
 
-from .models import Product, Category
-from .forms import ProductForm
+from .models import Product, Category, Inventory
+from .forms import ProductForm, InventoryForm
 
 # Views
 def all_products(request):
@@ -142,3 +142,31 @@ def delete_product(request, product_id):
     product.delete()
     messages.success(request, 'Product deleted!')
     return redirect(reverse('products'))
+
+@login_required
+def update_inventory(request, product_id):
+    """ Update the inventory of a product in the store """
+    product = get_object_or_404(Product, pk=product_id)
+    inventory = get_object_or_404(Inventory, product=product)
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
+    if request.method == 'POST':
+        form = InventoryForm(request.POST, instance=inventory)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully updated inventory!')
+            return redirect(reverse('product_detail', args=[product.id]))
+        else:
+            messages.error(request, 'Failed to update inventory. Please ensure the form is valid.')
+    else:
+        form = InventoryForm(instance=inventory)
+        messages.info(request, f'You are updating the inventory for {product.name}')
+
+    template = 'products/update_inventory.html'
+    context = {
+        'form': form,
+        'product': product,
+    }
+
+    return render(request, template, context)
