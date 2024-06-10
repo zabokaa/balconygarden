@@ -1,1 +1,1 @@
-Boutique Ado Confirmation for Order Number {{ order.order_number }}
+URBANGARDENING Confirmation | Order {{ order.order_number }}
