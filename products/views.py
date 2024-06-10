@@ -144,6 +144,25 @@ def delete_product(request, product_id):
     return redirect(reverse('products'))
 
 @login_required
+def inventory_management(request):
+    """ View for the superuser to manage inventory """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
+
+    search_query = request.GET.get('search', '')
+    if search_query:
+        products = Product.objects.filter(Q(name__icontains=search_query))
+    else:
+        products = Product.objects.all()
+
+    context = {
+        'products': products,
+    }
+
+    return render(request, 'products/inventory_management.html', context)
+
+@login_required
 def update_inventory(request, product_id):
     """ Update the inventory of a product in the store """
     product = get_object_or_404(Product, pk=product_id)

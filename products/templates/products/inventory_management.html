@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <hr>
+                <h2 class="logo-font mb-4">Inventory Management</h2>
+                <h5 class="text-muted">Search for a product to update</h5>
+                <hr>
+                <form method="GET" action="{% url 'inventory_management' %}">
+                    <input type="text" name="search" placeholder="Search by name" value="{{ request.GET.search }}">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6">
+                {% for product in products %}
+                    <div>
+                        <h3>{{ product.name }}</h3>
+                        <a class="btn btn-black rounded-0" href="{% url 'update_inventory' product_id=product.id %}">Update Inventory</a>
+                    </div>
+                {% empty %}
+                    <p>No products found.</p>
+                {% endfor %}
+            </div>            
+        </div>
+    </div>
+{% endblock %}
