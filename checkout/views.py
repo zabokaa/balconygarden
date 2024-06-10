@@ -6,7 +6,7 @@ from django.views.decorators.http import require_POST
 import stripe
 import json 
 
-from products.models import Product
+from products.models import Product, Inventory
 from bag.contexts import bag_contents
 from .forms import OrderForm
 from .models import Order, OrderLineItem
@@ -146,13 +146,18 @@ def checkout_success(request, order_number):
     save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)
 
+    # Update inventory
+    for line_item in order.lineitems.all():
+        product = line_item.product
+        inventory = Inventory.objects.get(product=product) 
+        inventory.in_stock -= line_item.quantity
+        inventory.save()
+
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
-        # Attach the user's profile to the order
         order.user_profile = profile
         order.save()
 
-        # Save the user's info
         if save_info:
             profile_data = {
                 'default_phone_number': order.phone_number,
