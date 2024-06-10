@@ -43,3 +43,5 @@ class Inventory(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     in_stock = models.IntegerField(default=0)
     last_updated = models.DateTimeField()
+    def __str__(self):
+        return f'{self.product.name} - In stock: {self.in_stock}'
