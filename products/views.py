@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
-
+from cloudinary.models import CloudinaryField
 from .models import Product, Category, Inventory
 from .forms import ProductForm, InventoryForm
 
