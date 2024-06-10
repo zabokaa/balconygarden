@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, reverse, HttpResponse, get_object_or_404
 from django.contrib import messages
-from products.models import Product
+from products.models import Product, Inventory
 
 # Views
 def view_bag(request):
@@ -12,8 +12,12 @@ def add_to_bag(request, item_id):
     """ Add a quantity of the specified product to the shopping bag """
     # in case product isnt found 404
     product = get_object_or_404(Product, pk=item_id)
+    inventory = Inventory.objects.get(product=product)
 # adding quantity and trasnform it to int as it is a string
     quantity = int(request.POST.get('quantity'))
+    if quantity > inventory.in_stock:
+        messages.error(request, f'Sorry, we only have {inventory.in_stock} {product.name}(s) in stock.')
+        return redirect('product_detail', product_id=product.id)
     redirect_url = request.POST.get('redirect_url')
     size = None
     if 'product_size' in request.POST:
