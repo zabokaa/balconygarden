@@ -57,29 +57,19 @@ def add_to_bag(request, item_id):
 def adjust_bag(request, item_id):
     """ Adjust the quantity of the specified product in the shopping bag """
     quantity = int(request.POST.get('quantity'))
-    size = None
     product = get_object_or_404(Product, pk=item_id)
-    if 'product_size' in request.POST:
-        size = request.POST['product_size']
-    # storing the bag in the session and get the bag if it exists
+    inventory = Inventory.objects.get(product=product)
     bag = request.session.get('bag', {})
-
-    if size:
-        if quantity > 0:
-            bag[item_id]['items_by_size'][size] = quantity
-            messages.success(request, f'Updated size {size.upper()} {product.name} quantity to {bag[item_id]["items_by_size"][size]}')
-        else:
-            messages.success(request, f'Removed size {size.upper()} {product.name} from your bag')
-            del bag[item_id]['items_by_size'][size]
-            if not bag[item_id]['items_by_size']:
-                bag.pop(item_id)
+    if quantity > 0:
+        if quantity > inventory.in_stock:
+            messages.error(request, f'Sorry, we only have {inventory.in_stock} {product.name}(s) in stock.')
+            return redirect(reverse('view_bag'))
+        bag[item_id] = quantity
+        messages.success(request, f'Updated {product.name} quantity to {bag[item_id]}')
     else:
-        if quantity > 0:
-            bag[item_id] = quantity
-            messages.success(request, f'Updated {product.name} quantity to {bag[item_id]}')
-        else:
-            bag.pop(item_id)
-            messages.success(request, f'Removed {product.name} from your bag')
+        bag.pop(item_id)
+        messages.success(request, f'Removed {product.name} from your bag')
+
     request.session['bag'] = bag
     return redirect(reverse('view_bag'))
 
