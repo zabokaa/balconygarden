@@ -115,6 +115,14 @@ input[name='q']::placeholder {
     color: #aab7c4;
 }
 
+.product-link {
+    color: black;
+}
+
+.product-link:hover {
+    color: var(--primary-color);
+}
+
 /* ------------------------------- bootstrap toasts */
 
 .message-container {
