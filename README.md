@@ -72,7 +72,7 @@ The Viña project has 5 models:
 
 Entity Relationship Diagram:
 
-  ![ERD](./MEDIA/readme/ERD_balconyGrown.pdf)
+  ![ERD](./media/readme/ERD_balconyGrown.pdf)
 
 ## Design
 
