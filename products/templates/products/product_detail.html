@@ -50,6 +50,11 @@
                     </small>
                 {% endif %}
                 <p class="mt-3">{{ product.description }}</p>
+                {% if inventory.in_stock == 0 %}
+                <p class="alert alert-warning">We are sorry, {{ inventory.product }} is out of stock. <br>Please check again - should be back latest in 3 days.</p>
+                {% elif inventory.in_stock <= 5 %}
+                <p class="alert alert-warning">Hurry up, there are only {{ inventory.in_stock }} in stock!</p>
+                {% endif %}
                 <!-- form for bag -->
                 <form class="form" action="{% url 'add_to_bag' product.id %}" method="POST">
                     <!-- POST method needs csrf token in django -->
